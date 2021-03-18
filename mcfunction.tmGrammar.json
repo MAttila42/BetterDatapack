@@ -1,0 +1,47 @@
+{
+  "scopeName": "source.mcfunction",
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "mcfunction",
+  "patterns": [{ "include": "#keywords" }, { "include": "#strings" }],
+  "repository": {
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.commands",
+          "match": "\\B/\\w*"
+        },
+        {
+          "name": "comment.line.number-sign",
+          "match": "^#.*"
+        },
+        {
+          "name": "variable.selectors",
+          "match": "@\\S*"
+        },
+        {
+          "name": "constant.numeric",
+          "match": "\\d"
+        },
+        {
+          "name": "markup.bold.json",
+          "match": "\"\\w+\":"
+        },
+        {
+          "name": "markup.bold.namespace",
+          "match": "[a-zA-z1-9-_]+:"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.mcfunction",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.mcfunction",
+          "match": "\\\\."
+        }
+      ]
+    }
+  }
+}
