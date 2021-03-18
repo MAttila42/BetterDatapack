@@ -4,6 +4,10 @@
 	"displayName": "Better Datapack",
 	"description": "Adds a few tweaks to how Minecraft Datapacks are constructed to make it easier to code.",
 	"version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ExAtom/BetterDatapack.git"
+  },
 	"engines": {
 		"vscode": "^1.54.0"
 	},
