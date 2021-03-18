@@ -9,4 +9,5 @@ You no longer need to cram long complex commands in a single line. However you w
 
 # Links:
 Source code on [Github](https://github.com/ExAtom/BetterDatapack)
-Documentation is WIP
+
+Documentation: WIP
