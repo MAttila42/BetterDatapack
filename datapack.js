@@ -61,17 +61,31 @@ async function manageFile(filePath, stats) {
   }
 
   if (path.extname(filePath) === ".mcfunction") {
-    rearrangeLines(filePath);
+    removeComments(filePath);
+    arrangeBySlashes(filePath);
   }
 }
 
-function rearrangeLines(path) {
+function removeComments(path) {
+  // Read file line-by-line
+  const regex = /#.*/i;
+  let fileOut = '';
+  let f = fs.readFileSync(path, 'utf-8').split(/\r?\n/);
+  for (let i of f) {
+    // Remove comments with Regex
+    fileOut += '\n' + i.replace(regex, '');
+  }
+  // Write to file
+  fs.writeFileSync(path, fileOut);
+}
+
+function arrangeBySlashes(path) {
   // Read file line-by-line
   let fileOut = '';
   let f = fs.readFileSync(path, 'utf-8').split(/\r?\n/);
   for (let i of f) {
     // Sort everything by slashes and hashtags
-    if (i.startsWith('/') || i.startsWith('#')) {
+    if (i.startsWith('/')) {
       fileOut += '\n' + i.substring(1);
     } else {
       while (i.startsWith('  ')) {

@@ -12,23 +12,23 @@
         },
         {
           "name": "comment.line.number-sign",
-          "match": "^#.*"
+          "match": "#.*"
         },
         {
           "name": "variable.selectors",
-          "match": "@\\S*"
+          "match": "@."
         },
         {
           "name": "constant.numeric",
           "match": "\\d"
         },
         {
-          "name": "markup.bold.json",
+          "name": "markup.bold.json-property",
           "match": "\"\\w+\":"
         },
         {
-          "name": "markup.bold.namespace",
-          "match": "[a-zA-z1-9-_]+:"
+          "name": "markup.bold.property",
+          "match": "[a-zA-z1-9-_.]+[:=]"
         }
       ]
     },
