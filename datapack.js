@@ -68,12 +68,11 @@ async function manageFile(filePath, stats) {
 
 function removeComments(path) {
   // Read file line-by-line
-  const regex = /#.*/i;
   let fileOut = '';
   let f = fs.readFileSync(path, 'utf-8').split(/\r?\n/);
   for (let i of f) {
     // Remove comments with Regex
-    fileOut += '\n' + i.replace(regex, '');
+    fileOut += '\n' + i.replace(/#.*/i, '');
   }
   // Write to file
   fs.writeFileSync(path, fileOut);
@@ -84,15 +83,15 @@ function arrangeBySlashes(path) {
   let fileOut = '';
   let f = fs.readFileSync(path, 'utf-8').split(/\r?\n/);
   for (let i of f) {
-    // Sort everything by slashes and hashtags
+    // Sort everything by slashes and remove
     if (i.startsWith('/')) {
-      fileOut += '\n' + i.substring(1);
+      fileOut += '\n';
     } else {
       while (i.startsWith('  ')) {
         i = i.substring(1);
       }
-      fileOut += i;
     }
+    fileOut += i.replace(/(^\/| \/)/, ' ').replace(/\\\//, '/');
   }
   // Write to file
   fs.writeFileSync(path, fileOut);

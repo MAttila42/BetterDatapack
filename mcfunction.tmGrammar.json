@@ -20,7 +20,15 @@
         },
         {
           "name": "constant.numeric",
-          "match": "\\d"
+          "match": "\\d+\\w?"
+        },
+        {
+          "name": "constant.numeric.coordinate.relative",
+          "match": "~.*"
+        },
+        {
+          "name": "constant.numeric.coordinate.local",
+          "match": "\\^.*"
         },
         {
           "name": "markup.bold.json-property",
@@ -28,7 +36,15 @@
         },
         {
           "name": "markup.bold.property",
-          "match": "[a-zA-z1-9-_.]+[:=]"
+          "match": "[a-zA-z][a-zA-z1-9-_.]*[:=]"
+        },
+        {
+          "name": "markup.italic",
+          "match": "(true|false)"
+        },
+        {
+          "name": "keyword.operator",
+          "match": "( = | == | < | <= | > | => | >< | \\+ | \\+= | \\- | \\-= | \\* | \\*= | / | /= | % | %= )"
         }
       ]
     },
