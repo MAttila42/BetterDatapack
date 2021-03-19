@@ -1,6 +1,9 @@
 # Better Datapack for Minecraft
 Same datapacks. Better execution.
 
+# How to use?
+Write your code as you wish. Once you got to a point where you would like to check in-game just open the Command Palette (`Ctrl + Shift + P`), type `convert` and hit `[Enter]`. A new, runnable datapack should be created at the specified path in `bdconfig.json`.
+
 # Features
 Here are all the features it gives. The Config file is necessary!
 
