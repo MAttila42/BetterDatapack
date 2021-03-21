@@ -3,7 +3,8 @@
   "publisher": "ExAtom",
   "displayName": "Better Datapack",
   "description": "Adds a few tweaks to how Minecraft Datapacks are constructed to make it easier to code.",
-  "version": "1.1.0",
+  "icon": "icon.png",
+  "version": "1.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/ExAtom/BetterDatapack.git"
@@ -22,8 +23,10 @@
     "languages": [
       {
         "id": "mcfunction",
-        "extensions": [".mcfunction"],
-				"configuration": "./language-configuration.json"
+        "extensions": [
+          ".mcfunction"
+        ],
+        "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
