@@ -1,13 +1,13 @@
-const vscode = require("vscode");
-const datapack = require("./datapack");
+const vscode = require('vscode');
+const datapack = require('./datapack');
 
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	console.log('The extension "better-datapack" is now active!');
+	console.log('The extension \'better-datapack\' is now active!');
 
-	let convert = vscode.commands.registerCommand("better-datapack.convert", function () {
+	let convert = vscode.commands.registerCommand('better-datapack.convert', function () {
 		datapack.convert();
 	});
 
