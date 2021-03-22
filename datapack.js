@@ -67,7 +67,7 @@ async function manageFile(filePath, stats) {
     f = f.replaceAll(/#.*/g, ''); // Remove comments
     f = f.replaceAll(/^ +/gm, ' '); // Remove whitespaces
     f = f.replaceAll(/(?!\r?\n\/)\r?\n/g, ''); // Rearrange by slashes
-    f = f.replaceAll(/(^\/| \/)/g, ' '); // Remove slashes
+    f = f.replaceAll(/(^\/| \/)/gm, ' '); // Remove slashes
     f = f.replaceAll(/\\\//g, '/'); // Remove escape characters
 
     fs.writeFileSync(filePath, f);
