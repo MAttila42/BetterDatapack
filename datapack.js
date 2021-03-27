@@ -5,7 +5,7 @@ const vscode = require('vscode'),
 
 async function convert() {
   // Check if ran from a folder
-  if (vscode.workspace.workspaceFolders === undefined) {
+  if (vscode.workspace.workspaceFolders == undefined) {
     console.error('Can\'t find workspace folder.\nQuitting.');
     vscode.window.showErrorMessage('Can\'t find workspace folder.');
     return;
@@ -58,20 +58,44 @@ async function manageFile(filePath, stats) {
   if (stats.isDirectory()) {
     return;
   }
-  if (path.basename(filePath) === 'bdconfig.json') {
+  if (path.basename(filePath) == 'bdconfig.json') {
     await fs.unlink(filePath)
   }
 
-  if (path.extname(filePath) === '.mcfunction') {
+  if (path.extname(filePath) == '.mcfunction') {
     let f = fs.readFileSync(filePath, 'utf-8');
+
     f = f.replaceAll(/#.*/g, ''); // Remove comments
-    f = f.replaceAll(/^ +/gm, ' '); // Remove whitespaces
-    f = f.replaceAll(/(?!\r?\n\/)\r?\n/g, ''); // Rearrange by slashes
-    f = f.replaceAll(/(^\/| \/)/gm, ' '); // Remove slashes
-    f = f.replaceAll(/\\\//g, '/'); // Remove escape characters
+    f = await declareFunction(f, filePath); // Declare functions
+    f = rearrange(f); // Rearrange the lines
 
     fs.writeFileSync(filePath, f);
   }
+}
+
+function rearrange(f) {
+  f = f.replaceAll(/^ +/gm, ' '); // Remove whitespaces
+  f = f.replaceAll(/(?!\r?\n\/)\r?\n/g, ''); // Rearrange by slashes
+  f = f.replaceAll(/(^\/| \/)/gm, ' '); // Remove slashes
+  f = f.replaceAll(/\\\//g, '/'); // Remove escape characters
+  f = f.replaceAll(/^ /gm, ''); // Remove single whitespace at the start of each line
+  return f;
+}
+
+async function declareFunction(f, filePath) {
+  if (f.search(/^\/mcfunction [a-zA-z1-9-_.]+/gm) > 0) { // Only do stuff if there is a function declaration
+    const regex = /(?<=^\/mcfunction )[a-zA-z1-9-_.]+/gm;
+    let funcNames;
+    while ((funcNames = regex.exec(f)) != null) { // Go through all the declarations
+      let newPath = filePath.replace(/\.mcfunction/, '');
+      await fs.mkdir(newPath).catch(err => console.error(err)); // Create a new folder for the functions
+      newPath = path.resolve(newPath, `${funcNames[0]}.mcfunction`);
+      let code = (new RegExp(`(?<=\\n/mcfunction ${funcNames[0]} \\{).*?(?=\\n\\})`, 'gms')).exec(f)[0]; // Get the code from declaration
+      await fs.writeFile(newPath, rearrange(code.replaceAll(`\n${/(?<=\n)\s*(?=\/)/ms.exec(code)[0]}`, '\n'))); // Write in new file with the leading whitespaces removed
+      regex.lastIndex;
+    }
+  }
+  return f.replaceAll(/\/mcfunction .+?\n}/gms, '');
 }
 
 module.exports = {

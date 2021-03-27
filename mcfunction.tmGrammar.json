@@ -20,15 +20,7 @@
         },
         {
           "name": "constant.numeric",
-          "match": "\\d+\\w?"
-        },
-        {
-          "name": "constant.numeric.coordinate.relative",
-          "match": "~.*"
-        },
-        {
-          "name": "constant.numeric.coordinate.local",
-          "match": "\\^.*"
+          "match": "[~\\^ ]{1}\\d+\\w?"
         },
         {
           "name": "markup.bold.json-property",
@@ -45,6 +37,10 @@
         {
           "name": "keyword.operator",
           "match": "( = | == | < | <= | > | => | >< | \\+ | \\+= | \\- | \\-= | \\* | \\*= | / | /= | % | %= )"
+        },
+        {
+          "name": "entity.name.function",
+          "match": "(?<=/mcfunction )[a-zA-z1-9-_.]+"
         }
       ]
     },

@@ -18,8 +18,19 @@ You can configurate the converting process by creating a `bdconfig.json` file at
 }
 ```
 
+## Function declaration (1.2.0)
+Most programming languages support this, but in Minecraft you have to make a new file to have a different function. Since BD 1.2.0, you can declare functions inside functions like this: `/mcfunction <function_name> { <code> }`. If it was declared in custom:main, then you can call the new one like so: custom:main/function_name.
+
+Example:
+![Code example](https://cdn.discordapp.com/attachments/825442308203479071/825455411033276436/unknown.png)
+
+Functions cannot be nested. You can call the function anywhere from the code.
+
 ## Multiline commands (1.0.0)
-You no longer need to cram long complex commands in a single line. However you will need to use slashes at the start of every single one.
+You no longer need to cram long complex commands in a single line. However you will need to use slashes at the start of every single one. Start of the commands also must start at the beggining of the line. I recommend using an understandable and uniform format.
+
+Example:
+![Code example](https://cdn.discordapp.com/attachments/825442308203479071/825442335860195378/unknown.png)
 
 # Links:
 Source code on [Github](https://github.com/ExAtom/BetterDatapack)
