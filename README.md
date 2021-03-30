@@ -2,7 +2,7 @@
 Same datapacks. Better execution.
 
 # How to use?
-Write your code as you wish. Once you got to a point where you would like to check in-game just click on the Convert button down in the status bar. Or alternatively use the `convert` command in the Command Palette (`Ctrl + Shift + P`). A new, runnable datapack should be created next to the project's folder in `bdout`, or at the specified location in `bdconfig.json`.
+Write your code as you wish. Once you got to a point where you would like to check in-game just click on the Convert button in the top right corner of the editor while in an mcfunction file. Or alternatively use the `convert` command in the Command Palette (`Ctrl + Shift + P`). A new, runnable datapack should be created next to the project's folder in `bdout`, or at the specified location in `bdconfig.json`.
 
 # Features
 Here are all the features it gives. The Config file isn't necessary.

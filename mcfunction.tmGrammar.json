@@ -20,7 +20,7 @@
         },
         {
           "name": "constant.numeric",
-          "match": "[~\\^ ]{1}\\d+\\w?"
+          "match": "([~\\^ ]\\d+\\w?|(?<=\\.)\\d+|[~\\^])"
         },
         {
           "name": "markup.bold.json-property",
@@ -36,7 +36,7 @@
         },
         {
           "name": "keyword.operator",
-          "match": "( = | == | < | <= | > | => | >< | \\+ | \\+= | \\- | \\-= | \\* | \\*= | / | /= | % | %= )"
+          "match": "( = | == | < | <= | > | => | >< | \\+ | \\+= | \\- | \\-= | \\* | \\*= | / | /= | % | %=  |(?<=\\d)\\.{1,2}|\\.{1,2}(?=\\d))"
         },
         {
           "name": "entity.name.function",
@@ -45,13 +45,28 @@
       ]
     },
     "strings": {
-      "name": "string.quoted.double.mcfunction",
-      "begin": "\"",
-      "end": "\"",
       "patterns": [
         {
-          "name": "constant.character.escape.mcfunction",
-          "match": "\\\\."
+          "name": "string.quoted.double.mcfunction",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.mcfunction",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.double.mcfunction",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.mcfunction",
+              "match": "\\\\."
+            }
+          ]
         }
       ]
     }
