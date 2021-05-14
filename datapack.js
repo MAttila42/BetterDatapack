@@ -65,7 +65,10 @@ async function manageFile(filePath, stats) {
   if (path.extname(filePath) == '.mcfunction') {
     let f = fs.readFileSync(filePath, 'utf-8');
 
+    f = '\n' + f; // Add a new line for bug purposes
     f = f.replaceAll(/#.*/g, ''); // Remove comments
+    f = f.replaceAll(/\s+$/gm, ''); // Remove ending whitespaces
+    // f = await betterExecute(f) // Better execute
     f = await declareFunction(f, filePath); // Declare functions
     f = rearrange(f); // Rearrange the lines
 
@@ -73,12 +76,18 @@ async function manageFile(filePath, stats) {
   }
 }
 
-function rearrange(f) {
-  f = f.replaceAll(/^ +/gm, ' '); // Remove whitespaces
-  f = f.replaceAll(/(?!\r?\n\/)\r?\n/g, ''); // Rearrange by slashes
-  f = f.replaceAll(/(^\/| \/)/gm, ' '); // Remove slashes
-  f = f.replaceAll(/\\\//g, '/'); // Remove escape characters
-  f = f.replaceAll(/^ /gm, ''); // Remove single whitespace at the start of each line
+async function betterExecute(f) {
+  if (f.search(/\/execute.*run \{/)) { // Only do stuff if there is need for better execute
+    const executes = /\/execute.*run \{.*?\}/gms; // Search for all the better executes
+    let execute;
+    while ((execute = executes.exec(f)) != null) { // Go through all the executes
+      let commands = /(?<=\/execute.*run \{).*?(?=\})/gms.exec(execute[0])[0].split(/\r?\n/);
+      console.log(execute);
+      console.log(commands);
+      
+      executes.lastIndex;
+    }
+  }
   return f;
 }
 
@@ -96,6 +105,15 @@ async function declareFunction(f, filePath) {
     }
   }
   return f.replaceAll(/\/mcfunction .+?\n}/gms, '');
+}
+
+function rearrange(f) {
+  f = f.replaceAll(/^ +/gm, ' '); // Remove whitespaces
+  f = f.replaceAll(/(?!\r?\n\/)\r?\n/g, ''); // Rearrange by slashes
+  f = f.replaceAll(/(^\/| \/)/gm, ' '); // Remove slashes
+  f = f.replaceAll(/\\\//g, '/'); // Remove escape characters
+  f = f.replaceAll(/^ /gm, ''); // Remove single whitespace at the start of each line
+  return f;
 }
 
 module.exports = {

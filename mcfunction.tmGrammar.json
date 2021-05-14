@@ -20,7 +20,7 @@
         },
         {
           "name": "constant.numeric",
-          "match": "([~\\^ ]\\d+\\w?|(?<=\\.)\\d+|[~\\^])"
+          "match": "([~\\^\\- ]\\d+\\w?|(?<=\\.)\\d+|[~\\^])"
         },
         {
           "name": "markup.bold.json-property",
