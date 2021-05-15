@@ -23,16 +23,23 @@ You no longer need to cram long complex commands in a single line. However you w
 
 Example:
 
-![Code example](https://cdn.discordapp.com/attachments/825442308203479071/825442335860195378/unknown.png)
+![Code example](https://cdn.discordapp.com/attachments/825442308203479071/843123400351940608/unknown.png)
 
 ## Function declaration (1.2.0)
 Most programming languages support this, but in Minecraft you have to make a new file to have a different function. Since BD 1.2.0, you can declare functions inside functions like this: `/mcfunction <function_name> { <code> }`. If it was declared in custom:main, then you can call the new one like so: custom:main/function_name.
 
 Example:
 
-![Code example](https://cdn.discordapp.com/attachments/825442308203479071/825455411033276436/unknown.png)
+![Code example](https://cdn.discordapp.com/attachments/825442308203479071/843123479866900541/unknown.png)
 
 Functions cannot be nested. You can call the function anywhere from the code.
+
+## Multi-command executes (1.3.0)
+It can be frustrating trying to find an applauseable method to run multiple commands when an execute condition is true. In BD 1.3+ if you put braces after `run` you will be able to put as many commands in there as you wish.
+
+Example:
+
+![Code example](https://cdn.discordapp.com/attachments/825442308203479071/843123559055228938/unknown.png)
 
 # Links:
 For support join my [Discord server](https://discord.gg/kembxGyb2x)
