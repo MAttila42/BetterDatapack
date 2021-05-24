@@ -19,8 +19,12 @@
           "match": "@."
         },
         {
+          "name": "variable.not-sign",
+          "match": "!(?=\\w+)"
+        },
+        {
           "name": "constant.numeric",
-          "match": "([~\\^\\- ]\\d+\\w?|(?<=\\.)\\d+|[~\\^])"
+          "match": "([~\\^\\- ]\\d+\\w?|(?<=[\\[\\{\\(\\.])\\d+\\w?|[~\\^])"
         },
         {
           "name": "markup.bold.json-property",

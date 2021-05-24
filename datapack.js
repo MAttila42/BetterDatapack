@@ -78,8 +78,8 @@ async function manageFile(filePath, stats) {
 
 async function convertExecutes(f) {
 	let f2 = f;
-	if (f.search(/\/execute.*run.*\{/)) { // Only do stuff if there is need for better execute
-		const executeRegex = /\/execute.*?run.*?\{/gms; // Search for all the executes
+	if (f.search(/\/execute.*?run\s*?\{/)) { // Only do stuff if there is need for better execute
+		const executeRegex = /\/execute.*?run\s*?\{/gms; // Search for all the executes
 		let executeStart;
 		while ((executeStart = executeRegex.exec(f)) != null) { // Look through the found executes
 			let execute = executeStart[0]; // Will contain the full execute
@@ -94,7 +94,7 @@ async function convertExecutes(f) {
 			const conditions = /\/execute.*?run\s*/gms; // Look for the condition of the execute
 			let condition;
 			while ((condition = conditions.exec(execute)) != null) { // Go through the conditions (only 1 result but still)
-				const commands = /(?<=\{).*(?=\})/gms; // Look for the commands in the execute
+				const commands = /(?<=run\s*?\{).*(?=\})/gms; // Look for the commands in the execute
 				let inside; // 'let inside' lmao xdd LOL much funny LAUGH!!1!
 				while ((inside = commands.exec(execute)) != null) { // Go through the commands found in the brackets of the execute
 					let fInside = inside[0]
