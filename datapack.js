@@ -67,8 +67,9 @@ async function manageFile(filePath, stats) {
 
 		f = '\n' + f; // Add a new line for bug purposes
 		f = f.replaceAll(/#.*/g, ''); // Remove comments
+		// f = f.replaceAll(/^\s+/gm, ''); // Remove starting whitespaces
 		f = f.replaceAll(/\s+$/gm, ''); // Remove ending whitespaces
-		f = await convertExecutes(f) // Convert better executes to normal
+		f = await convertExecutes(f, filePath, stats) // Convert better executes to normal
 		await declareFunctions(f, filePath); // Declare functions
 		f = rearrange(f); // Rearrange the lines
 
@@ -76,9 +77,14 @@ async function manageFile(filePath, stats) {
 	}
 }
 
-async function convertExecutes(f) {
+async function convertExecutes(f, filePath, stats) {
 	let f2 = f;
-	if (f.search(/\/execute.*?run\s*?\{/)) { // Only do stuff if there is need for better execute
+	if (f.search(/\/execute.*?run\s*?\{/gms) != -1) { // Only do stuff if there is need for better execute
+		let newPath = filePath.replace(/\.mcfunction/, ''); // Path of the folder where the exec mcfunctions will go
+		await fs.mkdir(newPath).catch(err => console.error(err)); // Create a new folder for the exec mcfunctions
+
+		let lastContent = ""; // Will store the last execute's content to avoid duplicates
+		let execId = 0;
 		const executeRegex = /\/execute.*?run\s*?\{/gms; // Search for all the executes
 		let executeStart;
 		while ((executeStart = executeRegex.exec(f)) != null) { // Look through the found executes
@@ -91,25 +97,38 @@ async function convertExecutes(f) {
 				if (i == '}') enders++;
 				if (starters == enders) break; // If every braces are closed then we have the full execute
 			}
+			if (execute == lastContent.trim()) continue; // If this execute was the content of the last execute then don't do anything with it
+
 			const conditions = /\/execute.*?run\s*/gms; // Look for the condition of the execute
 			let condition;
 			while ((condition = conditions.exec(execute)) != null) { // Go through the conditions (only 1 result but still)
 				const commands = /(?<=run\s*?\{).*(?=\})/gms; // Look for the commands in the execute
 				let inside; // 'let inside' lmao xdd LOL much funny LAUGH!!1!
-				while ((inside = commands.exec(execute)) != null) { // Go through the commands found in the brackets of the execute
-					let fInside = inside[0]
-						.replaceAll(/^\s+/gm, '') // Remove leading whitespaces
-						.replaceAll(/(?!\r?\n\/)\r?\n/g, '') // Rearrange by slashes
-						.split(/\r?\n/); // Separate commands
-					let results = [];
-					for (let i of fInside) {
-						if (i.trim()) {
-							results.push(`${condition[0].trimEnd()} ${i.trimStart()}`); // Construct the full and working execute
-						}
-					}
-					f2 = f2.replace(execute, results.join('\n')); // Replace the old execute with the new one
+				while ((inside = commands.exec(execute)) != null) { // Go through the commands found in the brackets of the execute (only 1 result but still)
+					lastContent = inside[0]; // Save the content
+					newPath = path.resolve(newPath, `exec${execId}.mcfunction`); // Complete the path with the exec mcfunction
+					fs.writeFileSync(newPath, inside[0]); // Create the file
+					manageFile(newPath, stats); // Recursively manage the contents of this file
 				}
+				
+				let functionPath = ""; // Will contain a constructed function path
+				let afterNamespace = false;
+				let firstFolder = true;
+				let pathFolders = newPath.split(path.sep); // List of the folders in the path
+				for (let i in pathFolders) { // Go through the indexes of the list
+					if (afterNamespace) { // If we already added the namespace to the path
+						functionPath += `${firstFolder ? "" : "/"}${path.basename(pathFolders[i], ".mcfunction")}`; // Add the new folder or file to the path
+						firstFolder = false;
+					}
+					if (pathFolders[i] == "functions" && !afterNamespace) { // If we haven't found the namespace and currently looking at a functions folder then we can find it
+						functionPath += `${pathFolders[i - 1]}:`; // Add the namespace folder to the path
+						afterNamespace = true;
+					}
+				}
+				f2 = f2.replace(execute, `${condition[0].trimEnd()} function ${functionPath}`); // Replace the execute with the new converted one
+				newPath = path.resolve(newPath, '../')
 			}
+			execId++;
 		}
 	}
 	return f2;
@@ -142,7 +161,7 @@ async function declareFunctions(f, filePath) {
 
 function rearrange(f) {
 	f = f.replaceAll(/^[ \t]+/gm, ' ') // Remove long whitespaces
-		.replaceAll(/(?!\r?\n\/)\r?\n/g, '') // Rearrange by slashes
+		.replaceAll(/(?!\r?\n\s*\/)\r?\n/g, '') // Rearrange by slashes
 		.replaceAll(/\/mcfunction .+\{.*\}/g, '') // Remove function declarations
 		.replaceAll(/(^\/| \/)/gm, ' ') // Remove slashes
 		.replaceAll(/\\\//g, '/') // Remove escape characters
