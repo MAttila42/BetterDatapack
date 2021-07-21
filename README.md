@@ -32,8 +32,6 @@ Example:
 
 ![Code example](https://cdn.discordapp.com/attachments/825442308203479071/843123479866900541/unknown.png)
 
-Functions cannot be nested. You can call the function anywhere from the code.
-
 ## Multi-command executes (1.3.0)
 It can be frustrating trying to find an applauseable method to run multiple commands when an execute condition is true. In BD 1.3+ if you put braces after `run` you will be able to put as many commands in there as you wish.
 
