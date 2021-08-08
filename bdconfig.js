@@ -3,8 +3,9 @@ const fs = require('fs-extra'),
 
 function config(wPath) {
 	let config = { // Default values
+		executeNames: 'exec',
 		outputPath: path.resolve(wPath, '../bdout'),
-		executeNames: 'exec'
+		hideInfo: false
 	};
 	let file;
 	try {

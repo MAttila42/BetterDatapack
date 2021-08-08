@@ -14,8 +14,8 @@ async function convertDatapack() {
 	try {
 		wPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
 	} catch (e) {
-		console.error('Can\'t find workspace folder.\n' + e);
-		vscode.window.showErrorMessage('Can\'t find workspace folder.');
+		console.error('Can\'t find workspace folder!\n' + e);
+		vscode.window.showErrorMessage('Can\'t find workspace folder!');
 		return;
 	}
 
@@ -48,7 +48,9 @@ async function convertDatapack() {
 		files.shift();
 	}
 
-	vscode.window.showInformationMessage(`Datapack got converted to ${bdConfig.outputPath}`);
+	if (!bdConfig.hideInfo) {
+		vscode.window.showInformationMessage(`Datapack got converted to ${bdConfig.outputPath}`);
+	}
 }
 
 async function walk(dir) {

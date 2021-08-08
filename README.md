@@ -5,16 +5,24 @@ Same datapacks. Better execution.
 Write your code as you wish. Once you got to a point where you would like to check in-game just click on the Convert button in the top right corner of the editor while in an mcfunction file. Or alternatively use the `convert` command in the Command Palette (`Ctrl + Shift + P`). A new, runnable datapack should be created next to the project's folder in `bdout`, or at the specified location in `bdconfig.json`.
 
 # Features
-Here are all the features it gives. The Config file isn't necessary.
+Here are all the features it gives. The Config file isn't necessary, anything can be nested.
 
 ## Config
 You can configure the converting process by creating a `bdconfig.json` file at the root of your project. If you don't have this file then the extension will use default values.
 
-* outputPath - Determines the location where the datapack will be outputted. By default it goes next to your project with the name `bdout`
+Property Name | Type | Default value | Description
+--------------|------|---------------|------------
+executeNames | `string` | `"exec"` | Name of the mcfunctions created for better executes
+outputPath | `string` | `"your/workspace/folder/bdout"` | The location where the datapack will be outputted
+hideInfo | `bool` | `false` | Hides the successful convertion popup
 
+
+Example:
 ```json
 {
-  "outputPath": "path/to/the/output/directory"
+  "execNames": "executeFunction",
+  "outputPath": "path/to/the/output/directory",
+  "hideInfo": true
 }
 ```
 
@@ -33,7 +41,7 @@ Example:
 ![Code example](https://cdn.discordapp.com/attachments/825442308203479071/843123479866900541/unknown.png)
 
 ## Multi-command executes (1.3.0)
-It can be frustrating trying to find an applauseable method to run multiple commands when an execute condition is true. In BD 1.3+ if you put braces after `run` you will be able to put as many commands in there as you wish.
+It can be frustrating trying to find a reasonable method to run multiple commands when an execute condition is true. In BD 1.3+ if you put braces after `run` you will be able to put as many commands in there as you wish.
 
 Example:
 
