@@ -6,7 +6,8 @@ const vscode = require('vscode'),
 	{ clean } = require('./convertSteps/clean'),
 	{ execute } = require('./convertSteps/execute'),
 	{ mcfunction } = require('./convertSteps/mcfunction'),
-	{ rearrange } = require('./convertSteps/rearrange');
+	{ rearrange } = require('./convertSteps/rearrange'),
+	{ trycatch } = require('./convertSteps/trycatch');
 
 async function convertDatapack() {
 	// Get the path to the workspace folder
@@ -42,6 +43,7 @@ async function convertDatapack() {
 		convertStep(clean(f));
 		convertStep(await execute(f, files[0], bdConfig));
 		convertStep(await mcfunction(f, files[0]));
+		convertStep(trycatch(f, files[0], bdconfig));
 		convertStep(rearrange(f));
 
 		fs.writeFileSync(files[0], f);

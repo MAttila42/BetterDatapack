@@ -8,7 +8,7 @@
       "patterns": [
         {
           "name": "keyword.commands",
-          "match": "\\B/\\w*"
+          "match": "(\\B/\\w*|(?<=\\}\\s*)catch(?=\\s*\\{))"
         },
         {
           "name": "comment.line.number-sign",

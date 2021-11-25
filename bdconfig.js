@@ -5,7 +5,10 @@ function config(wPath) {
 	let config = { // Default values
 		executeNames: 'exec',
 		outputPath: path.resolve(wPath, '../bdout'),
-		hideInfo: false
+		hideInfo: false,
+		tryScore: "try",
+		tryFunction: "try",
+		tryObjective: "tryscore"
 	};
 	let file;
 	try {
