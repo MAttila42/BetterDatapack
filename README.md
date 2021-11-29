@@ -12,17 +12,24 @@ You can configure the converting process by creating a `bdconfig.json` file at t
 
 Property Name | Type | Default value | Description
 --------------|------|---------------|------------
+bdLoad | `string` | `"bdload"` | The mcfunction file that loads up all the necessary scores/forceloads/setblocks/summons etc.
 executeNames | `string` | `"exec"` | Name of the mcfunctions created for better executes
-outputPath | `string` | `"your/workspace/folder/bdout"` | The location where the datapack will be outputted
+outputPath | `string` | `"yourFolder/bdout"` | The location where the datapack will be outputted
 hideInfo | `bool` | `false` | Hides the successful convertion popup
+tryScore | `string` | `"try"` | "Player's" name used to test trycatches
+tryFunctions | `string` | `"try"` | Name of the mcfunctions created for trycatches
+tryObjective | `string` | `"tryscore"` | Scoreboard objective's name created to test trycatches
 
 
 Example:
 ```json
 {
+  "bdLoad": "load",
   "execNames": "executeFunction",
   "outputPath": "path/to/the/output/directory",
-  "hideInfo": true
+  "hideInfo": true,
+  "tryScore": "t",
+  "tryFunctions": "tryFunc"
 }
 ```
 

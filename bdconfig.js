@@ -3,11 +3,12 @@ const fs = require('fs-extra'),
 
 function config(wPath) {
 	let config = { // Default values
+		bdLoad: 'bdload',
 		executeNames: 'exec',
 		outputPath: path.resolve(wPath, '../bdout'),
 		hideInfo: false,
 		tryScore: "try",
-		tryFunction: "try",
+		tryFunctions: "try",
 		tryObjective: "tryscore"
 	};
 	let file;
