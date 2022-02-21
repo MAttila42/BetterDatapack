@@ -1,5 +1,5 @@
 # Better Datapack for Minecraft
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/2b0b629805bb48c6b274ec9d86479d87)](https://www.codacy.com/gh/ExAtom/BetterDatapack/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ExAtom/BetterDatapack&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/17e178a4f1d642d282a89d509b8edfde)](https://www.codacy.com/gh/ExAtom/BetterDatapack/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ExAtom/BetterDatapack&amp;utm_campaign=Badge_Grade)
 
 Same datapacks. Better execution.
 
