@@ -8,8 +8,8 @@ async function mcfunction(f, filePath) {
 	};
 
 	const regex = /(?<=^\/mcfunction )[a-zA-z1-9-_.]+/gm;
-	let funcNames;
-	while ((funcNames = regex.exec(f)) != null) { // Go through all the declarations
+	let funcNames = regex.exec(f);
+	while (funcNames != null) { // Go through all the declarations
 		let newPath = filePath.replace(/\.mcfunction/, '');
 		await fs.mkdir(newPath).catch(err => console.error(err)); // Create a new folder for the functions
 		newPath = path.resolve(newPath, `${funcNames[0]}.mcfunction`);
@@ -29,6 +29,7 @@ async function mcfunction(f, filePath) {
 		}
 		code = code.replaceAll(`\n${/(?<=\n)\s*(?=\/)/ms.exec(code)[0]}`, '\n');
 		fs.writeFileSync(newPath, code); // Create new mcfunction file
+		funcNames = regex.exec(f);
 	}
 
 	rObj.content = f.replaceAll(/\/mcfunction .+\{.*\}/gms, '') // Remove all declarations

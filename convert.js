@@ -27,7 +27,9 @@ async function convertDatapack() {
 	// Copy project files to location
 	rimraf.sync(oPath);
 	await fs.copy(wPath, oPath, { overwrite: true }).catch(err => console.error(err));
-	await fs.unlink(path.resolve(oPath, 'bdconfig.json'));
+	try {
+		await fs.unlink(path.resolve(oPath, 'bdconfig.json'));
+	} catch (e) {}
 	let files = await walk(oPath);
 
 	// Convert the files
@@ -43,7 +45,7 @@ async function convertDatapack() {
 		convertStep(clean(f));
 		convertStep(await execute(f, files[0], bdConfig));
 		convertStep(await mcfunction(f, files[0]));
-		convertStep(trycatch(f, files[0], bdconfig));
+		convertStep(trycatch(f, files[0], bdConfig));
 		convertStep(rearrange(f));
 
 		fs.writeFileSync(files[0], f);

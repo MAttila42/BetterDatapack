@@ -14,8 +14,8 @@ async function execute(f, filePath, bdconfig) {
 		let lastContent = ""; // Will store the last execute's content to avoid duplicates
 		let execId = 0;
 		const executeRegex = /\/execute.*?run\s*?\{/gms; // Search for all the executes
-		let executeStart;
-		while ((executeStart = executeRegex.exec(f)) != null) { // Look through the found executes
+		let executeStart = executeRegex.exec(f);
+		while (executeStart != null) { // Look through the found executes
 			let execute = executeStart[0], // Will contain the full execute
 				open = 1,
 				close = 0;
@@ -51,6 +51,7 @@ async function execute(f, filePath, bdconfig) {
 			rObj.content = rObj.content.replace(execute, `${condition.trimEnd()} function ${functionPath}`); // Replace the execute with the new converted one
 			newPath = path.resolve(newPath, '../');
 			execId++;
+			executeStart = executeRegex.exec(f);
 		}
 	}
 	return rObj;
