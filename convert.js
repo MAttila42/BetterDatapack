@@ -42,11 +42,17 @@ async function convertDatapack() {
 			f = obj.content;
 		}
 
-		convertStep(clean(f));
-		convertStep(await execute(f, files[0], bdConfig));
-		convertStep(await mcfunction(f, files[0]));
-		convertStep(trycatch(f, files[0], bdConfig));
-		convertStep(rearrange(f));
+		let convertSteps = [
+			clean(f),
+			await execute(f, files[0], bdConfig),
+			await mcfunction(f, files[0]),
+			trycatch(f, files[0], bdConfig),
+			rearrange(f)
+		]
+
+		for (const step of convertSteps) {
+			convertStep(step);
+		}
 
 		fs.writeFileSync(files[0], f);
 		files.shift();

@@ -7,10 +7,14 @@ function trycatch(f, filePath, bdconfig) {
 		newFiles: []
 	};
     
-    if (f.search(/^\/try/gms) != -1) { // Only do stuff if there are try catches
-        let newContent = "";
-        newContent += `/scoreboard objectives add ${bdconfig.tryObjective} dummy\n`;
-		console.log(newContent);
+    if (f.search(/^\/try\s*{/gms) != -1) { // Only do stuff if there are try catches
+        // let newContent = "";
+        // newContent += `/scoreboard objectives add ${bdconfig.tryObjective} dummy\n`;
+		// console.log(newContent);
+
+		let lastContent = ""; // Will store the last try's content to avoid duplicates
+		let tryId = 0;
+		const tryRegex = /^\/try\s*{/gms
     }
 
 	return rObj;
