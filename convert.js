@@ -43,15 +43,15 @@ async function convertDatapack() {
 		}
 
 		let convertSteps = [
-			clean(f),
-			await execute(f, files[0], bdConfig),
-			await mcfunction(f, files[0]),
-			trycatch(f, files[0], bdConfig),
-			rearrange(f)
+			() => clean(f),
+			async () => await execute(f, files[0], bdConfig),
+			async () => await mcfunction(f, files[0]),
+			() => trycatch(f, files[0], bdConfig),
+			() => rearrange(f)
 		]
 
-		for (const step of convertSteps) {
-			convertStep(step);
+		for (let i = 0; i < convertSteps.length; i++) {
+			convertStep(await convertSteps[i]());
 		}
 
 		fs.writeFileSync(files[0], f);

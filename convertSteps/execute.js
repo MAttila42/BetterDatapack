@@ -7,33 +7,33 @@ async function execute(f, filePath, bdconfig) {
 		newFiles: []
 	};
 	
-	if (f.search(/\/execute.*?run\s*?\{/gms) != -1) { // Only do stuff if there is need for better execute
+	const executeRegex = /\/execute.*?run\s*?\{/gms;
+	if (f.search(executeRegex) != -1) { // Only do stuff if there is need for better execute
 		let newPath = filePath.replace('.mcfunction', ''); // Path to the folder where the exec mcfunctions will go
 		await fs.mkdir(newPath).catch(err => console.error(err)); // Create a new folder for the exec mcfunctions
 		
 		let lastContent = ""; // Will store the last execute's content to avoid duplicates
-		let execId = 0;
-		const executeRegex = /\/execute.*?run\s*?\{/gms; // Search for all the executes
-		let executeStart = executeRegex.exec(f);
-		while (executeStart != null) { // Look through the found executes
-			let execute = executeStart[0], // Will contain the full execute
+		let id = 0;
+		let start = executeRegex.exec(f);
+		while (start != null) { // Look through the found executes
+			let full = start[0], // Will contain the full execute
 				open = 1,
 				close = 0;
 			for (let i of f.slice(executeRegex.lastIndex)) { // Go throught the string one character at a time
-				execute += i;
+				full += i;
 				if (i == '{') open++;
 				if (i == '}') close++;
 				if (open == close) break; // If every braces are closed then we have the full execute
 			}
-			if (execute == lastContent.trim()) continue; // If this execute was the content of the last execute then don't do anything with it
+			if (full == lastContent.trim()) continue; // If this execute was the content of the last execute then don't do anything with it
 
-			let commands = /(?<=run\s*?\{).*(?=\})/gms.exec(execute)[0]; // Execute's commands
+			let commands = /(?<=run\s*?\{).*(?=\})/gms.exec(full)[0]; // Execute's commands
 			lastContent = commands; // Save the content
-			newPath = path.resolve(newPath, `${bdconfig.executeNames}${execId}.mcfunction`); // Complete the path with the exec mcfunction
+			newPath = path.resolve(newPath, `${bdconfig.executeNames}${id}.mcfunction`); // Complete the path with the exec mcfunction
 			fs.writeFileSync(newPath, commands); // Create the file
 			rObj.newFiles.push(newPath);
 			
-			let condition = /\/execute.*?run\s*/gms.exec(execute)[0], // Execute's condition
+			let condition = /\/execute.*?run/gms.exec(full)[0], // Execute's condition
 				functionPath = "", // Will contain a constructed function path
 				afterNamespace = false,
 				firstFolder = true,
@@ -48,10 +48,10 @@ async function execute(f, filePath, bdconfig) {
 					afterNamespace = true;
 				}
 			}
-			rObj.content = rObj.content.replace(execute, `${condition.trimEnd()} function ${functionPath}`); // Replace the execute with the new converted one
+			rObj.content = rObj.content.replace(full, `${condition.trimEnd()} function ${functionPath}`); // Replace the execute with the new converted one
 			newPath = path.resolve(newPath, '../');
-			execId++;
-			executeStart = executeRegex.exec(f);
+			id++;
+			start = executeRegex.exec(f);
 		}
 	}
 	return rObj;
