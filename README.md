@@ -14,7 +14,7 @@ You can configure the converting process by creating a `bdconfig.json` file at t
 
 Property Name | Type | Default value | Description
 --------------|------|---------------|------------
-bdLoad | `string` | `"bdload"` | [UNUSED] The mcfunction file that loads up all the necessary scores/forceloads/setblocks/summons etc.
+bdLoad | `string` | `"bdload"` | The mcfunction file that loads up all the necessary scores/forceloads/setblocks/summons etc.
 executeNames | `string` | `"exec"` | Name of the mcfunctions created for better executes
 outputPath | `string` | `"yourFolder/bdout"` | The location where the datapack will be outputted
 hideInfo | `bool` | `false` | Hides the successful convertion popup
